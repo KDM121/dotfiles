@@ -1,0 +1,25 @@
+Include /etc/ssh/sshd_config.d/*.conf
+#Port 22
+PermitRootLogin no
+#StrictModes yes
+MaxAuthTries 6
+MaxSessions 10
+PasswordAuthentication no
+PermitEmptyPasswords no
+PubkeyAuthentication yes
+AuthorizedKeysFile      .ssh/authorized_keys
+AllowUsers kieran
+KbdInteractiveAuthentication no
+
+# Kerberos options
+#KerberosAuthentication no
+#KerberosOrLocalPasswd yes
+#KerberosTicketCleanup yes
+#KerberosGetAFSToken no
+UsePAM yes
+
+X11Forwarding no
+
+AcceptEnv LANG LC_*
+
+Subsystem       sftp    /usr/lib/openssh/sftp-server
