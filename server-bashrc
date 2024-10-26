@@ -1,0 +1,111 @@
+# Ignore case on auto-completion
+bind "set completion-ignore-case on"
+
+# Show auto-completion list automatically, without double tab
+bind "set show-all-if-ambiguous On"
+
+# Set environment variables
+export LANG=en_GB.UTF-8
+export EDITOR=nano
+
+# File Aliases
+alias cd='z'
+alias cp='cp -i'
+alias mv='mv -i'
+alias mkdir='mkdir -p'
+alias bd='cd "$OLDPWD"'
+alias cat='bat'
+alias home='cd ~'
+alias ..="cd .."
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias rmd='/bin/rm  --recursive --force --verbose '
+
+# Create and go to the directory
+mkdircd() {
+  mkdir -p "$1"
+  cd "$1"
+}
+
+# docker Aliases
+
+alias docker-clean=' \
+  docker container prune -f ; \
+  docker image prune -f ; \
+  docker network prune -f ; \
+  docker volume prune -f '
+
+alias dc="docker compose"
+alias dcup="docker compose up -d"
+alias dps="docker ps"
+alias dcdown="docker compose down"
+
+
+# podman Aliases
+
+alias podman-clean=' \
+  podman container prune -f ; \
+  podman image prune -f ; \
+  podman network prune -f ; \
+  podman volume prune -f '
+
+alias pc="podman compose"
+alias pcup="podman compose up -d"
+alias pps="podman ps"
+alias pcdown="podman compose down"
+
+# System Aliases
+
+alias update="apt update"
+alias upgrade="apt upgrade -y"
+alias grep='grep --color=auto'
+alias neofetch='fastfetch'
+alias ps='ps auxf'
+alias cls='clear'
+alias openports='netstat -nape --inet'
+alias pubip="curl ifconfig.me"
+
+# ls aliases
+
+alias l="ls"
+alias la='l -lah'                # show hidden files
+alias lx='l -lXBh'               # sort by extension
+alias lk='l -lSrh'               # sort by size
+alias lu='l -lurh'               # sort by access time
+alias lr='l -lRh'                # recursive ls
+alias lm='l -alh |more'          # pipe through 'more'
+alias lw='l -xAh'                # wide listing format
+alias ldir="l -l | egrep '^d'"   # directories only
+
+# Extraction
+
+alias mktar='tar -cvf'
+alias mkbz2='tar -cvjf'
+alias mkgz='tar -cvzf'
+alias untar='tar -xvf'
+alias unbz2='tar -xvjf'
+alias ungz='tar -xvzf'
+
+extract() {
+  for archive in "$@"; do
+    if [ -f "$archive" ]; then
+      case $archive in
+      *.tar.bz2) tar xvjf $archive ;;
+      *.tar.gz) tar xvzf $archive ;;
+      *.bz2) bunzip2 $archive ;;
+      *.rar) rar x $archive ;;
+      *.gz) gunzip $archive ;;
+      *.tar) tar xvf $archive ;;
+      *.tbz2) tar xvjf $archive ;;
+      *.tgz) tar xvzf $archive ;;
+      *.zip) unzip $archive ;;
+      *.Z) uncompress $archive ;;
+      *.7z) 7z x $archive ;;
+      *) echo "don't know how to extract '$archive'..." ;;
+      esac
+    else
+      echo "'$archive' is not a valid file!"
+    fi
+  done
+}
