@@ -25,7 +25,13 @@ read -p "Do you want enable auto update? (y/n) " yn
 case $yn in
         [yY] ) echo "enabling auto updates";
                 apt install unattended-upgrades -y
-                dpkg-reconfigure -plow unattended-upgrades
+                dpkg-reconfigure --priority=low unattended-upgrades
+                distro_codename=$(lsb_release -c -s)
+                sudo tee -a /etc/apt/apt.conf.d/50unattended-upgrades << EOF
+                "origin=Debian,codename=${distro_codename}-security";
+                "origin=Debian,codename=${distro_codename}-updates";
+                EOF
+                sudo systemctl enable --now unattended-upgrades
                 break;;
         [nN] )  echo skipping install of sudo and curl;
                 break;;
@@ -82,20 +88,6 @@ case $yn in
 esac
 done
 
-# disable root
-while true; do
-read -p "Do you want to create a new sudo user? (y/n) " yn
-
-case $yn in
-        [yY] ) echo "disabling root user";
-                passwd -l root
-                break;;
-        [nN] )  echo "skipping disabling root";
-                break;;
-        *)      echo "invalid response";;
-esac
-done
-
 # install podman
 while true; do
 read -p "Do you want to install podman? (y/n) " yn
@@ -123,6 +115,20 @@ case $yn in
                 wget -O /etc/ssh/ssh_config.d https://github.com/KDM121/dotfiles/blob/main/server-ssh-config-d
                 wget -O /home/$username1/.inputrc https://github.com/KDM121/dotfiles/blob/main/server-inputrc
                 wget -O /home/$username2/.inputrc https://github.com/KDM121/dotfiles/blob/main/server-inputrc
+                break;;
+        [nN] )  echo "skipping disabling root";
+                break;;
+        *)      echo "invalid response";;
+esac
+done
+
+# disable root
+while true; do
+read -p "Do you want to create a new sudo user? (y/n) " yn
+
+case $yn in
+        [yY] ) echo "disabling root user";
+                passwd -l root
                 break;;
         [nN] )  echo "skipping disabling root";
                 break;;
