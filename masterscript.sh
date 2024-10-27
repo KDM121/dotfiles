@@ -30,7 +30,7 @@ case $yn in
                 sudo tee -a /etc/apt/apt.conf.d/50unattended-upgrades << EOF
                 "origin=Debian,codename=${distro_codename}-security";
                 "origin=Debian,codename=${distro_codename}-updates";
-                EOF
+EOF
                 sudo systemctl enable --now unattended-upgrades
                 break;;
         [nN] )  echo skipping install of sudo and curl;
