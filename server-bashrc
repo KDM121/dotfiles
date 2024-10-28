@@ -65,6 +65,7 @@ alias ps='ps auxf'
 alias cls='clear'
 alias openports='netstat -nape --inet'
 alias pubip="curl ifconfig.me"
+alias ip="ip -c"
 
 # ls aliases
 
