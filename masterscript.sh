@@ -123,6 +123,16 @@ case $yn in
                 wget -O /etc/ssh/ssh_config.d https://github.com/KDM121/dotfiles/raw/refs/heads/main/server-ssh-config-d
                 wget -O /home/"$username1"/.inputrc https://github.com/KDM121/dotfiles/raw/refs/heads/main/server-inputrc
                 wget -O /home/"$username2"/.inputrc https://github.com/KDM121/dotfiles/raw/refs/heads/main/server-inputrc
+                # Set correct ownership and permissions
+                chown "$username1":"$username1" /home/"$username1"/.bashrc /home/"$username1"/.inputrc
+                chown "$username2":"$username2" /home/"$username2"/.bashrc /home/"$username2"/.inputrc
+                chmod 644 /home/"$username1"/.bashrc /home/"$username1"/.inputrc
+                chmod 644 /home/"$username2"/.bashrc /home/"$username2"/.inputrc
+                chmod 644 /etc/ssh/ssh_config.d/default.conf
+                
+                # Source the .bashrc files
+                su - "$username1" -c "source /home/$username1/.bashrc"
+                su - "$username2" -c "source /home/$username2/.bashrc"
                 break;;
         [nN] )  echo "skipping";
                 break;;
