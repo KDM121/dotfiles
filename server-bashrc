@@ -59,6 +59,13 @@ alias pcdown="podman compose down"
 
 alias update="apt update"
 alias upgrade="apt upgrade -y"
+alias apt-clean=' \
+  apt autoremove ; \
+  apt autopurge ; \
+  apt  ; \
+  apt '
+
+ 
 alias grep='grep --color=auto'
 alias neofetch='fastfetch'
 alias ps='ps auxf'
