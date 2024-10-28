@@ -128,7 +128,7 @@ case $yn in
                 chown "$username2":"$username2" /home/"$username2"/.bashrc /home/"$username2"/.inputrc
                 chmod 644 /home/"$username1"/.bashrc /home/"$username1"/.inputrc
                 chmod 644 /home/"$username2"/.bashrc /home/"$username2"/.inputrc
-                chmod 644 /etc/ssh/ssh_config.d/default.conf
+                chmod 755 /etc/ssh/ssh_config.d/default.conf
                 
                 # Source the .bashrc files
                 su - "$username1" -c "source /home/$username1/.bashrc"
