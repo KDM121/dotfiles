@@ -62,8 +62,8 @@ alias upgrade="apt upgrade -y"
 alias apt-clean=' \
   apt autoremove ; \
   apt autopurge ; \
-  apt  ; \
-  apt '
+  apt autoclean ; \
+  apt update'
 
  
 alias grep='grep --color=auto'
