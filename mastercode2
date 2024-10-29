@@ -17,12 +17,6 @@ get_user_input() {
     "7" "Set dotfiles" on \
     "8" "Disable root" off 3>&1 1>&2 2>&3)
 
-if [ $? -ne 0 ]; then
-  echo "You Cancelled"
-  exit
-else
-  echo "options selected."
-fi
 
   for choice in $choices; do
     case $choice in
