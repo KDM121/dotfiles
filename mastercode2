@@ -20,8 +20,10 @@ while true; do
 
 if [ $? -eq 0 ]; then
   echo "You selected: $choices"
+  break;;
 else
   echo "No options selected."
+  exit
 fi
 
   for choice in $choices; do
