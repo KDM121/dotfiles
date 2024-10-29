@@ -7,16 +7,22 @@ get_user_input() {
 }
 
 # Main loop
-  choices=$(whiptail --checklist "Select options" 25 50 8 \
-    "1" "Update and Upgrade" on \
-    "2" "Enable Automatic Update and Upgrade" on \
-    "3" "Install curl and sudo" on \
-    "4" "Create a new user" off \
-    "5" "Create a new sudo user" off \
-    "6" "Install podman" off \
-    "7" "Set dotfiles" on \
-    "8" "Disable root" off 3>&1 1>&2 2>&3)
+choices=$(whiptail --checklist "Select options" 25 50 8 \
+  "1" "Update and Upgrade" on \
+  "2" "Enable Automatic Update and Upgrade" on \
+  "3" "Install curl and sudo" on \
+  "4" "Create a new user" off \
+  "5" "Create a new sudo user" off \
+  "6" "Install podman" off \
+  "7" "Set dotfiles" on \
+  "8" "Disable root" off 3>&1 1>&2 2>&3)
 
+if [ $? -eq 0 ]; then
+  echo "You selected: $choices"
+else
+  echo "No options selected."
+  exit 1
+fi
 
   for choice in $choices; do
     case $choice in
