@@ -3,7 +3,6 @@
 # Function to get user input for username and password
 get_user_input() {
   username=$(whiptail --inputbox "Enter username" 10 30 --title "Username" 3>&1 1>&2 2>&3)
-  password=$(whiptail --passwordbox "Enter password" 10 30 --title "Password" 3>&1 1>&2 2>&3)
 }
 
 # Main loop
@@ -54,17 +53,13 @@ EOF
         echo "Create new non-admin user"
         get_user_input
         username1=$username
-        password1=$password
         adduser "$username1"
-        echo "$username1:$password1" | chpasswd
         ;;
       5)
         echo "Create sudo user"
         get_user_input
         username2=$username
-        password2=$password
         adduser "$username2"
-        echo "$username2:$password2" | chpasswd
         usermod -aG sudo "$username2"
         ;;
       6)
