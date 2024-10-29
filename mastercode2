@@ -24,7 +24,7 @@ else
   exit 1
 fi
 
-  for choice in $choices; do
+for choice in $(echo $choices | tr -d '\"'); do
     case $choice in
       1)
         echo "Update and Upgrading"
