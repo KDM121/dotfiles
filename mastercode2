@@ -7,7 +7,6 @@ get_user_input() {
 }
 
 # Main loop
-while true; do
   choices=$(whiptail --checklist "Select options" 25 50 8 \
     "1" "Update and Upgrade" on \
     "2" "Enable Automatic Update and Upgrade" on \
@@ -101,4 +100,3 @@ EOF
         ;;
     esac
   done
-done
