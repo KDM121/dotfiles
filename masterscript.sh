@@ -76,14 +76,12 @@ EOF
         wget -O /home/"$username1"/.bashrc https://raw.githubusercontent.com/KDM121/dotfiles/refs/heads/main/server-bashrc
         wget -O /home/"$username2"/.bashrc https://raw.githubusercontent.com/KDM121/dotfiles/refs/heads/main/server-bashrc
         wget -O /etc/ssh/ssh_config.d https://github.com/KDM121/dotfiles/raw/refs/heads/main/server-ssh-config-d
-        wget -O /home/"$username1"/.inputrc https://github.com/KDM121/dotfiles/raw/refs/heads/main/server-inputrc
-        wget -O /home/"$username2"/.inputrc https://github.com/KDM121/dotfiles/raw/refs/heads/main/server-inputrc
 
         # Set permissions
-        chown "$username1":"$username1" /home/"$username1"/.bashrc /home/"$username1"/.inputrc
-        chown "$username2":"$username2" /home/"$username2"/.bashrc /home/"$username2"/.inputrc
-        chmod 644 /home/"$username1"/.bashrc /home/"$username1"/.inputrc
-        chmod 644 /home/"$username2"/.bashrc /home/"$username2"/.inputrc
+        chown "$username1":"$username1" /home/"$username1"/.bashrc
+        chown "$username2":"$username2" /home/"$username2"/.bashrc
+        chmod 644 /home/"$username1"/.bashrc
+        chmod 644 /home/"$username2"/.bashrc
         chmod 755 /etc/ssh/ssh_config.d/default.conf
 
         # Source bashrc
