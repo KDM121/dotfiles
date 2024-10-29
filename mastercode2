@@ -22,7 +22,6 @@ if [ $? -ne 0 ]; then
   exit
 else
   echo "options selected."
-  break
 fi
 
   for choice in $choices; do
