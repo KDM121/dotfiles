@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Function to get user input for username and password
+# Function to get user input for username
 get_user_input() {
   username=$(whiptail --inputbox "Enter username" 10 30 --title "Username" 3>&1 1>&2 2>&3)
 }
 
-# Main loop
+# Selection Board
 choices=$(whiptail --checklist "Select options" 25 50 8 \
   "1" "Update and Upgrade" on \
   "2" "Enable Automatic Update and Upgrade" on \
@@ -16,6 +16,7 @@ choices=$(whiptail --checklist "Select options" 25 50 8 \
   "7" "Set dotfiles" on \
   "8" "Disable root" off 3>&1 1>&2 2>&3)
 
+# exit if no choice selected
 if [ $? -eq 0 ]; then
   echo "You selected: $choices"
 else
@@ -23,6 +24,7 @@ else
   exit 1
 fi
 
+loop through the selected choices
 for choice in $(echo $choices | tr -d '\"'); do
     case $choice in
       1)
