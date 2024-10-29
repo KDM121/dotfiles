@@ -18,10 +18,11 @@ while true; do
     "7" "Set dotfiles" on \
     "8" "Disable root" off 3>&1 1>&2 2>&3)
 
-  if [ $? -ne 0 ]; then
-    echo "Exiting..."
-    exit 0
-  fi
+if [ $? -eq 0 ]; then
+  echo "You selected: $choices"
+else
+  echo "No options selected."
+fi
 
   for choice in $choices; do
     case $choice in
