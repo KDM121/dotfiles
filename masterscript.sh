@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Check if running as root
+if [ "$(id -u)" != "0" ]; then
+  echo "Error: This script must be run with root privileges."
+  echo "Please run with sudo or as the root user."
+  exit 1
+fi
+
 # Function to get user input for username
 get_user_input() {
   username=$(whiptail --inputbox "Enter username" 10 30 --title "Username" 3>&1 1>&2 2>&3)
