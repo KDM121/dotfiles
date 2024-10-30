@@ -13,7 +13,7 @@ get_user_input() {
 }
 
 # Selection Board
-choices=$(whiptail --checklist "Select options" 25 60 8 \
+choices=$(whiptail --checklist "Select options" 30 40 9 \
   "1" "Update and Upgrade" on \
   "2" "Enable Automatic Update and Upgrade" on \
   "3" "Install curl and sudo" on \
