@@ -21,7 +21,8 @@ choices=$(whiptail --checklist "Select options" 25 50 8 \
   "5" "Create a new sudo user" off \
   "6" "Install podman" off \
   "7" "Set dotfiles" on \
-  "8" "Disable root" off 3>&1 1>&2 2>&3)
+  "8" "Set IP address" off \
+  "9" "Disable root" off 3>&1 1>&2 2>&3)
 
 # exit if no choice selected
 if [ $? -eq 0 ]; then
@@ -95,7 +96,10 @@ EOF
         su - "$username1" -c "source /home/$username1/.bashrc"
         su - "$username2" -c "source /home/$username2/.bashrc"
         ;;
-      8)
+	  8)
+		wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/ip.sh | bash
+		;;
+      9)
         echo "Disabling root"
         passwd -l root
         ;;
