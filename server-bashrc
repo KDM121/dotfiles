@@ -9,7 +9,6 @@ export LANG=en_GB.UTF-8
 export EDITOR=nano
 
 # File Aliases
-alias cd='z'
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias mkdir='mkdir -p'
