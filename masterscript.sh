@@ -19,7 +19,7 @@ choices=$(whiptail --checklist "Select options" 30 40 9 \
   "3" "Install curl and sudo" on \
   "4" "Create a new user" off \
   "5" "Create a new sudo user" off \
-  "6" "Install podman" off \
+  "6" "Install docker" off \
   "7" "Set dotfiles" on \
   "8" "Set IP address" off \
   "9" "Disable root" off 3>&1 1>&2 2>&3)
@@ -73,10 +73,7 @@ EOF
         usermod -aG sudo "$username2"
         ;;
       6)
-        echo "Install podman"
-        apt-get -y install podman
-        systemctl --user enable --now podman.socket
-        apt install podman-compose -y
+        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/ip.sh | bash
         ;;
       7)
         echo "Set dotfiles"
