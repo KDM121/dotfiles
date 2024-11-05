@@ -73,7 +73,7 @@ EOF
         usermod -aG sudo "$username2"
         ;;
       6)
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/ip.sh | bash
+        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/docker.sh | bash
         ;;
       7)
         echo "Set dotfiles"
