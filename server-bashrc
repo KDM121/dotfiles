@@ -31,9 +31,9 @@ mkdircd() {
 
 alias docker-clean=' \
   docker container prune -f ; \
-  docker image prune -f ; \
+  docker image prune -a -f ; \
   docker network prune -f ; \
-  docker volume prune -f '
+  docker volume prune -a -f '
 
 alias dc="docker compose"
 alias dcup="docker compose up -d"
@@ -59,10 +59,11 @@ alias pcdown="podman compose down"
 alias update="apt update"
 alias upgrade="apt upgrade -y"
 alias apt-clean=' \
-  apt autoremove ; \
-  apt autopurge ; \
-  apt autoclean ; \
-  apt update'
+  apt autoremove -y ; \
+  apt autopurge -y ; \
+  apt autoclean -y ; \
+  apt update ; \
+  apt upgrade -y'
 
  
 alias grep='grep --color=auto'
