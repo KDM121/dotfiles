@@ -22,7 +22,9 @@ choices=$(whiptail --checklist "Select options" 30 40 9 \
   "6" "Install docker" off \
   "7" "Set dotfiles" on \
   "8" "Set IP address" off \
-  "9" "Disable root" off 3>&1 1>&2 2>&3)
+  "9" "Install Nala" off \
+  "10" "Disable root" off 3>&1 1>&2 2>&3)
+
 
 # exit if no choice selected
 if [ $? -eq 0 ]; then
@@ -33,7 +35,7 @@ else
 fi
 
 loop through the selected choices
-for choice in $(echo $choices | tr -d '\"'); do
+for choice in $(echo "$choices" | tr -d '\"'); do
     case $choice in
       1)
         echo "Update and Upgrading"
@@ -76,27 +78,33 @@ EOF
         wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/docker.sh | bash
         ;;
       7)
-        echo "Set dotfiles"
-        # Download
-        wget -O /home/"$username1"/.bashrc https://raw.githubusercontent.com/KDM121/dotfiles/refs/heads/main/server-bashrc
-        wget -O /home/"$username2"/.bashrc https://raw.githubusercontent.com/KDM121/dotfiles/refs/heads/main/server-bashrc
-        wget -O /etc/ssh/ssh_config.d https://github.com/KDM121/dotfiles/raw/refs/heads/main/server-ssh-config-d
-
-        # Set permissions
-        chown "$username1":"$username1" /home/"$username1"/.bashrc
-        chown "$username2":"$username2" /home/"$username2"/.bashrc
-        chmod 644 /home/"$username1"/.bashrc
-        chmod 644 /home/"$username2"/.bashrc
-        chmod 755 /etc/ssh/ssh_config.d/default.conf
-
-        # Source bashrc
-        su - "$username1" -c "source /home/$username1/.bashrc"
-        su - "$username2" -c "source /home/$username2/.bashrc"
+		users=("username1" "username2" "$(whoami)")
+		current_user="$(whoami)"
+		if [[ "$current_user" == "root" ]]; then
+		  echo "Skipping execution as the current user is root." 
+		  exit 1 
+		fi 
+		for user in "${users[@]}"; do
+		  if [[ "$user" == "$current_user" ]]; then
+		
+			echo "Set dotfiles"
+			wget -O /home/"$user"/.bashrc https://raw.githubusercontent.com/KDM121/dotfiles/refs/heads/main/server-bashrc
+			wget -O /etc/ssh/ssh_config.d https://github.com/KDM121/dotfiles/raw/refs/heads/main/server-ssh-config-d
+			chown "$username1":"$user" /home/"$user"/.bashrc
+			chmod 644 /home/"$user"/.bashrc
+			chmod 755 /etc/ssh/ssh_config.d/default.conf
+			su - "$user" -c "source /home/$user/.bashrc"
+		  fi
+		done
         ;;
 	  8)
 		wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/ip.sh | bash
 		;;
-      9)
+	  9)
+		curl https://gitlab.com/volian/volian-archive/-/raw/main/install-nala.sh | bash
+		apt install -t nala nala
+		;;
+      10)
         echo "Disabling root"
         passwd -l root
         ;;
