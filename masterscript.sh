@@ -38,28 +38,13 @@ loop through the selected choices
 for choice in $(echo "$choices" | tr -d '\"'); do
     case $choice in
       1)
-        echo "Update and Upgrading"
-        apt update
-        apt upgrade -y
-        apt dist-upgrade -y
-        apt autoremove -y
-        apt autopurge -y
+        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/update.sh | bash
         ;;
       2)
-        echo "Automatic Update and Upgrade"
-        apt install unattended-upgrades -y
-        dpkg-reconfigure --priority=low unattended-upgrades
-        distro_codename=$(lsb_release -c -s)
-        tee -a /etc/apt/apt.conf.d/50unattended-upgrades << EOF
-"origin=Debian,codename=${distro_codename}-security";
-"origin=Debian,codename=${distro_codename}-updates";
-EOF
-        systemctl enable --now unattended-upgrades
+        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/autoupdate.sh | bash
         ;;
       3)
-        echo "Install prereqs"
-        apt install curl -y
-        apt install sudo -y
+        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/prereq.sh | bash
         ;;
       4)
         echo "Create new non-admin user"
@@ -101,8 +86,7 @@ EOF
 		wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/ip.sh | bash
 		;;
 	  9)
-		curl https://gitlab.com/volian/volian-archive/-/raw/main/install-nala.sh | bash
-		apt install -t nala nala
+		wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/nalainstall.sh | bash
 		;;
       10)
         echo "Disabling root"
