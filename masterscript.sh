@@ -34,7 +34,7 @@ else
   exit 1
 fi
 
-loop through the selected choices
+# loop through the selected choices
 for choice in $(echo "$choices" | tr -d '\"'); do
     case $choice in
       1)
@@ -63,31 +63,27 @@ for choice in $(echo "$choices" | tr -d '\"'); do
         wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/docker.sh | bash
         ;;
       7)
-		users=("username1" "username2" "$(whoami)")
-		current_user="$(whoami)"
-		if [[ "$current_user" == "root" ]]; then
-		  echo "Skipping execution as the current user is root." 
-		  exit 1 
-		fi 
-		for user in "${users[@]}"; do
-		  if [[ "$user" == "$current_user" ]]; then
-		
-			echo "Set dotfiles"
-			wget -O /home/"$user"/.bashrc https://raw.githubusercontent.com/KDM121/dotfiles/refs/heads/main/server-bashrc
-			wget -O /etc/ssh/ssh_config.d https://github.com/KDM121/dotfiles/raw/refs/heads/main/server-ssh-config-d
-			chown "$username1":"$user" /home/"$user"/.bashrc
-			chmod 644 /home/"$user"/.bashrc
-			chmod 755 /etc/ssh/ssh_config.d/default.conf
-			su - "$user" -c "source /home/$user/.bashrc"
-		  fi
-		done
+		    users=("username1" "username2" "$(whoami)")
+		    current_user="$(whoami)"
+		    for user in "${users[@]}"; do
+		      if [[ "$user" == "$current_user" ]]; then
+		  
+	    		echo "Set dotfiles"
+		    	wget -O /home/"$user"/.bashrc https://raw.githubusercontent.com/KDM121/dotfiles/refs/heads/main/server-bashrc
+		    	wget -O /etc/ssh/ssh_config.d https://github.com/KDM121/dotfiles/raw/refs/heads/main/server-ssh-config-d
+		    	chown "$username1":"$user" /home/"$user"/.bashrc
+		    	chmod 644 /home/"$user"/.bashrc
+			    chmod 755 /etc/ssh/ssh_config.d/default.conf
+			    su - "$user" -c "source /home/$user/.bashrc"
+		      fi
+		    done
         ;;
-	  8)
-		wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/ip.sh | bash
-		;;
-	  9)
-		wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/nalainstall.sh | bash
-		;;
+	    8)
+		    wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/ip.sh | bash
+		    ;;
+	    9)
+		    wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/nalainstall.sh | bash
+		    ;;
       10)
         echo "Disabling root"
         passwd -l root
