@@ -1,7 +1,7 @@
 #!/bin/bash
 
-sudo apt install xfce4
-sudo apt install xrdp
+sudo apt install xfce4 -y
+sudo apt install xrdp -y
 dpkg -L xrdp
 sudo systemctl restart xrdp
 echo "configure xrdp"
