@@ -29,53 +29,58 @@ else
   exit 1
 fi
 
+# Create a temporary directory to store downloaded scripts
+temp_dir=$(mktemp -d)
+
 # loop through the selected choices
 for choice in $(echo "$choices" | tr -d '\"'); do
     case $choice in
-      1) #Update and upgrade script
-        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/update.sh
-        bash update.sh
+      1) # Update and upgrade script
+        wget -O "$temp_dir/update.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/update.sh
+        bash "$temp_dir/update.sh"
         ;;
-      2) #Enable automatic upgrades
-        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/autoupdate.sh
-        bash autoupdate.sh
+      2) # Enable automatic upgrades
+        wget -O "$temp_dir/autoupdate.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/autoupdate.sh
+        bash "$temp_dir/autoupdate.sh"
         ;;
-      3) #Install curl and sudo
-        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/sudocurl.sh
-        bash sudocurl.sh
+      3) # Install curl and sudo
+        wget -O "$temp_dir/sudocurl.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/sudocurl.sh
+        bash "$temp_dir/sudocurl.sh"
         ;;
-      4) #Create new user
-        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/user.sh
-        bash user.sh
+      4) # Create new user
+        wget -O "$temp_dir/user.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/user.sh
+        bash "$temp_dir/user.sh"
         ;;
-      5) #Create new sudo user
-        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/sudouser.sh
-        bash sudouser.sh
+      5) # Create new sudo user
+        wget -O "$temp_dir/sudouser.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/sudouser.sh
+        bash "$temp_dir/sudouser.sh"
         ;;
-      6) #Install docker
-        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/docker.sh
-        bash docker.sh
+      6) # Install docker
+        wget -O "$temp_dir/docker.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/docker.sh
+        bash "$temp_dir/docker.sh"
         ;;
-      7) #Set dotfiles for all users on system?
-        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/set-dotfiles.sh
-        bash set-dotfiles.sh
+      7) # Set dotfiles for all users on system?
+        wget -O "$temp_dir/set-dotfiles.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/set-dotfiles.sh
+        bash "$temp_dir/set-dotfiles.sh"
         ;;
-      8) #Set IP address
-        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/ip.sh
-        bash ip.sh
+      8) # Set IP address
+        wget -O "$temp_dir/ip.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/ip.sh
+        bash "$temp_dir/ip.sh"
         ;;
-      9) #Install nala
-        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/nalainstall.sh
-        bash nalainstall.sh
+      9) # Install nala
+        wget -O "$temp_dir/nalainstall.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/nalainstall.sh
+        bash "$temp_dir/nalainstall.sh"
         ;;
-      10) #Disable Root
-        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/disable-root.sh
-        bash disable-root.sh
+      10) # Disable Root
+        wget -O "$temp_dir/disable-root.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/disable-root.sh
+        bash "$temp_dir/disable-root.sh"
         ;;
-      11) #Enable RDP
-        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/lxc-rdp.sh
-        bash lxc-rdp.sh
+      11) # Enable RDP
+        wget -O "$temp_dir/lxc-rdp.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/lxc-rdp.sh
+        bash "$temp_dir/lxc-rdp.sh"
         ;;
-
     esac
 done
+
+# Cleanup temporary directory
+rm -rf "$temp_dir"
