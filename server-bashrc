@@ -2,6 +2,8 @@
 export LANG=en_GB.UTF-8
 export EDITOR=nano
 
+PS1='${debian_chroot:+($debian_chroot)}\h:\w\$ '
+
 # File Aliases
 alias cp='cp -iv'
 alias mv='mv -iv'
