@@ -8,7 +8,6 @@ PasswordAuthentication no
 PermitEmptyPasswords no
 PubkeyAuthentication yes
 AuthorizedKeysFile      .ssh/authorized_keys
-AllowUsers kieran
 KbdInteractiveAuthentication no
 
 # Kerberos options
