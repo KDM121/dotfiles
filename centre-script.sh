@@ -33,8 +33,8 @@ fi
 for choice in $(echo "$choices" | tr -d '\"'); do
     case $choice in
       1) #Update and upgrade script
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/update.sh | bash
-        ;;
+          wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/update.sh | bash
+          ;;
       2) #Enable automatic upgrades
         wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/autoupdate.sh | bash
         ;;
@@ -53,12 +53,12 @@ for choice in $(echo "$choices" | tr -d '\"'); do
       7) #Set dotfiles for all users on system?
         wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/set-dotfiles.sh| bash
         ;;
-	    8) #Set IP address
+      8) #Set IP address
         wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/ip.sh | bash
-	      ;;
-	    9) #Install nala
+        ;;
+      9) #Install nala
         wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/nalainstall.sh | bash
-	      ;;
+        ;;
       10) #Disable Root
         wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/disable-root.sh | bash
         ;;
@@ -68,4 +68,3 @@ for choice in $(echo "$choices" | tr -d '\"'); do
 
     esac
 done
-`
