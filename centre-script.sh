@@ -59,7 +59,7 @@ for choice in $(echo "$choices" | tr -d '\"'); do
         wget -O "$temp_dir/docker.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/docker.sh
         bash "$temp_dir/docker.sh"
         ;;
-      7) # Set dotfiles for all users on system?
+      7) # Set dotfiles for all users on system
         wget -O "$temp_dir/set-dotfiles.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/set-dotfiles.sh
         bash "$temp_dir/set-dotfiles.sh"
         ;;
