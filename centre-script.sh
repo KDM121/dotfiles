@@ -10,7 +10,7 @@ fi
 # Selection Board
 choices=$(whiptail --checklist "Select options" 20 40 11 \
   "1" "Update and Upgrade" on \
-  "2" "Enable Automatic Updates" on \
+  "2" "Enable Automatic Updates " on \
   "3" "Install curl and sudo" on \
   "4" "Create a new user" off \
   "5" "Create a new sudo user" off \
