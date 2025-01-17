@@ -8,7 +8,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 # Selection Board
-choices=$(whiptail --checklist "Select options" 60 60 11 \
+choices=$(whiptail --checklist "Select options" 30 30 11 \
   "1" "Update and Upgrade" on \
   "2" "Enable Automatic Update and Upgrade" on \
   "3" "Install curl and sudo" on \
