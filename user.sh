@@ -6,7 +6,7 @@ read -s -p "Enter the new user's password: " password
 echo
 
 # Create the new user with the provided name
-sudo useradd -m -c "$username" $username
+sudo useradd -m -s /bin/bash -c "$username" $username
 
 # Set the new user's password 
 echo "$username:$password" | sudo chpasswd
