@@ -19,7 +19,7 @@ choices=$(whiptail --checklist "Select options" 30 30 11 \
   "8" "Set IP address" off \
   "9" "Install Nala" off \
   "10" "Disable Root" off \
-  "10" "Enable RDP" off 3>&1 1>&2 2>&3)
+  "11" "Enable RDP" off 3>&1 1>&2 2>&3)
 
 # exit if no choice selected
 if [ $? -eq 0 ]; then
