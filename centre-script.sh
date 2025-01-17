@@ -33,37 +33,48 @@ fi
 for choice in $(echo "$choices" | tr -d '\"'); do
     case $choice in
       1) #Update and upgrade script
-          wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/update.sh | bash
-          ;;
+        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/update.sh
+        bash update.sh
+        ;;
       2) #Enable automatic upgrades
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/autoupdate.sh | bash
+        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/autoupdate.sh
+        bash autoupdate.sh
         ;;
       3) #Install curl and sudo
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/sudocurl.sh | bash
+        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/sudocurl.sh
+        bash sudocurl.sh
         ;;
       4) #Create new user
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/user.sh| bash
+        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/user.sh
+        bash user.sh
         ;;
       5) #Create new sudo user
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/sudouser.sh| bash
+        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/sudouser.sh
+        bash sudouser.sh
         ;;
       6) #Install docker
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/docker.sh | bash
+        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/docker.sh
+        bash docker.sh
         ;;
       7) #Set dotfiles for all users on system?
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/set-dotfiles.sh| bash
+        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/set-dotfiles.sh
+        bash set-dotfiles.sh
         ;;
       8) #Set IP address
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/ip.sh | bash
+        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/ip.sh
+        bash ip.sh
         ;;
       9) #Install nala
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/nalainstall.sh | bash
+        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/nalainstall.sh
+        bash nalainstall.sh
         ;;
       10) #Disable Root
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/disable-root.sh | bash
+        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/disable-root.sh
+        bash disable-root.sh
         ;;
       11) #Enable RDP
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/lxc-rdp.sh | bash
+        wget https://github.com/KDM121/dotfiles/raw/refs/heads/main/lxc-rdp.sh
+        bash lxc-rdp.sh
         ;;
 
     esac
