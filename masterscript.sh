@@ -7,15 +7,15 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
-# Function to get user input for username
-get_user_input() {
-  username=$(whiptail --inputbox "Enter username" 10 30 --title "Username" 3>&1 1>&2 2>&3)
-}
+# Create a log file
+log_file="/var/log/masterscript.log"
+exec > >(tee -a "$log_file") 2>&1
+echo "Started logging"
 
 # Selection Board
-choices=$(whiptail --checklist "Select options" 30 40 9 \
+choices=$(whiptail --checklist "Select options" 20 40 11 \
   "1" "Update and Upgrade" on \
-  "2" "Enable Automatic Update and Upgrade" on \
+  "2" "Enable Automatic Updates " on \
   "3" "Install curl and sudo" on \
   "4" "Create a new user" off \
   "5" "Create a new sudo user" off \
@@ -23,8 +23,8 @@ choices=$(whiptail --checklist "Select options" 30 40 9 \
   "7" "Set dotfiles" on \
   "8" "Set IP address" off \
   "9" "Install Nala" off \
-  "10" "Disable root" off 3>&1 1>&2 2>&3)
-
+  "10" "Enable RDP" off \
+  "11" "Disable Root" off 3>&1 1>&2 2>&3)
 
 # exit if no choice selected
 if [ $? -eq 0 ]; then
@@ -34,59 +34,94 @@ else
   exit 1
 fi
 
+# Create a temporary directory to store downloaded scripts
+echo "created temp dir"
+temp_dir=$(mktemp -d)
+
 # loop through the selected choices
+echo "looping through selections"
 for choice in $(echo "$choices" | tr -d '\"'); do
     case $choice in
-      1)
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/update.sh | bash
+      1) # Update and upgrade script
+        wget -O "$temp_dir/update.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/update.sh
+        echo "Downloaded update.sh"
+        chmod +x "$temp_dir/update.sh"
+        echo "Running update.sh"
+        bash "$temp_dir/update.sh"
         ;;
-      2)
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/autoupdate.sh | bash
+      2) # Enable automatic upgrades
+        wget -O "$temp_dir/autoupdate.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/autoupdate.sh
+        echo "Downloaded autoupdate.sh"
+        chmod +x "$temp_dir/autoupdate.sh"
+        echo "Running autoupdate.sh"
+        bash "$temp_dir/autoupdate.sh"
         ;;
-      3)
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/prereq.sh | bash
+      3) # Install curl and sudo
+        wget -O "$temp_dir/sudocurl.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/sudocurl.sh
+        echo "Downloaded sudocurl.sh"
+        chmod +x "$temp_dir/sudocurl.sh"
+        echo "Running sudocurl.sh"
+        bash "$temp_dir/sudocurl.sh"
         ;;
-      4)
-        echo "Create new non-admin user"
-        get_user_input
-        username1=$username
-        adduser "$username1"
+      4) # Create new user
+        wget -O "$temp_dir/user.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/user.sh
+        echo "Downloaded user.sh"
+        chmod +x "$temp_dir/user.sh"
+        echo "Running user.sh"
+        bash "$temp_dir/user.sh"
         ;;
-      5)
-        echo "Create sudo user"
-        get_user_input
-        username2=$username
-        adduser "$username2"
-        usermod -aG sudo "$username2"
+      5) # Create new sudo user
+        wget -O "$temp_dir/sudouser.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/sudouser.sh
+        echo "Downloaded sudouser.sh"
+        chmod +x "$temp_dir/sudouser.sh"
+        echo "Running sudouser.sh"
+        bash "$temp_dir/sudouser.sh"
         ;;
-      6)
-        wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/docker.sh | bash
+      6) # Install docker
+        wget -O "$temp_dir/docker.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/docker.sh
+        echo "Downloaded docker.sh"
+        chmod +x "$temp_dir/docker.sh"
+        echo "Running docker.sh"
+        bash "$temp_dir/docker.sh"
         ;;
-      7)
-		    users=("username1" "username2" "$(whoami)")
-		    current_user="$(whoami)"
-		    for user in "${users[@]}"; do
-		      if [[ "$user" == "$current_user" ]]; then
-		  
-	    		echo "Set dotfiles"
-		    	wget -O /home/"$user"/.bashrc https://raw.githubusercontent.com/KDM121/dotfiles/refs/heads/main/server-bashrc
-		    	wget -O /etc/ssh/ssh_config.d https://github.com/KDM121/dotfiles/raw/refs/heads/main/server-ssh-config-d
-		    	chown "$username1":"$user" /home/"$user"/.bashrc
-		    	chmod 644 /home/"$user"/.bashrc
-			    chmod 755 /etc/ssh/ssh_config.d/default.conf
-			    su - "$user" -c "source /home/$user/.bashrc"
-		      fi
-		    done
+      7) # Set dotfiles for all users on system
+        wget -O "$temp_dir/set-dotfiles.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/set-dotfiles.sh
+        echo "Downloaded set-dotfiles.sh"
+        chmod +x "$temp_dir/set-dotfiles.sh"
+        echo "Running set-dotfiles.sh"
+        bash "$temp_dir/set-dotfiles.sh"
         ;;
-	    8)
-		    wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/ip.sh | bash
-		    ;;
-	    9)
-		    wget -O- https://github.com/KDM121/dotfiles/raw/refs/heads/main/nalainstall.sh | bash
-		    ;;
-      10)
-        echo "Disabling root"
-        passwd -l root
+      8) # Set IP address
+        wget -O "$temp_dir/ip.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/ip.sh
+        echo "Downloaded ip.sh"
+        chmod +x "$temp_dir/ip.sh"
+        echo "Running ip.sh"
+        bash "$temp_dir/ip.sh"
+        ;;
+      9) # Install nala
+        wget -O "$temp_dir/nalainstall.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/nalainstall.sh
+        echo "Downloaded nalainstall.sh"
+        chmod +x "$temp_dir/nalainstall.sh"
+        echo "Running nalainstall.sh"
+        bash "$temp_dir/nalainstall.sh"
+        ;;
+      10) # Enable RDP
+        wget -O "$temp_dir/lxc-rdp.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/lxc-rdp.sh
+        echo "Downloaded lxc-rdp.sh"
+        chmod +x "$temp_dir/lxc-rdp.sh"
+        echo "Running lxc-rdp.sh"
+        bash "$temp_dir/lxc-rdp.sh"
+        ;;
+      11) # Disable Root
+        wget -O "$temp_dir/disable-root.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/disable-root.sh
+        echo "Downloaded disable-root.sh"
+        chmod +x "$temp_dir/disable-root.sh"
+        echo "Running disable-root.sh"
+        bash "$temp_dir/disable-root.sh"
         ;;
     esac
-  done
+done
+echo "ran all selected scripts"
+# Cleanup temporary directory
+rm -rf "$temp_dir"
+echo "deleted temp dir"
