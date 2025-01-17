@@ -18,8 +18,8 @@ choices=$(whiptail --checklist "Select options" 20 40 11 \
   "7" "Set dotfiles" on \
   "8" "Set IP address" off \
   "9" "Install Nala" off \
-  "10" "Disable Root" off \
-  "11" "Enable RDP" off 3>&1 1>&2 2>&3)
+  "10" "Enable RDP" off \
+  "11" "Disable Root" off 3>&1 1>&2 2>&3)
 
 # exit if no choice selected
 if [ $? -eq 0 ]; then
@@ -37,7 +37,9 @@ for choice in $(echo "$choices" | tr -d '\"'); do
     case $choice in
       1) # Update and upgrade script
         wget -O "$temp_dir/update.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/update.sh
+        echo "Downloaded update.sh"
         bash "$temp_dir/update.sh"
+        echo "Running update.sh"
         ;;
       2) # Enable automatic upgrades
         wget -O "$temp_dir/autoupdate.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/autoupdate.sh
@@ -71,13 +73,13 @@ for choice in $(echo "$choices" | tr -d '\"'); do
         wget -O "$temp_dir/nalainstall.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/nalainstall.sh
         bash "$temp_dir/nalainstall.sh"
         ;;
-      10) # Disable Root
-        wget -O "$temp_dir/disable-root.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/disable-root.sh
-        bash "$temp_dir/disable-root.sh"
-        ;;
-      11) # Enable RDP
-        wget -O "$temp_dir/lxc-rdp.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/lxc-rdp.sh
+      10) # Enable RDP
+        wget -O "$temp_dir/disable-root.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/lxc-rdp.sh
         bash "$temp_dir/lxc-rdp.sh"
+        ;;
+      11) # Disable Root
+        wget -O "$temp_dir/lxc-rdp.sh" https://github.com/KDM121/dotfiles/raw/refs/heads/main/disable-root.sh
+        bash "$temp_dir/disable-root.sh"
         ;;
     esac
 done
