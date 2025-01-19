@@ -4,6 +4,7 @@
 read -p "Enter the new user's name: " username
 adduser $username
 
+usermod -s /bin/bash $username
 # Add the new user to the sudo group
 sudo usermod -aG sudo $username
 
